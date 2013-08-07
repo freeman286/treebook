@@ -1,19 +1,24 @@
 Treebook::Application.routes.draw do
+  get "profiles/show"
+
   devise_for :users
 
-devise_for :users, :skip => [:sessions]
-as :user do
-  get 'register' => 'devise/registrations#new', :as => :register
-  get 'log_in' => 'devise/sessions#new', :as => :new_user_session
-  post 'log_in' => 'devise/sessions#create', :as => :user_session
-  match 'log_out' => 'devise/sessions#destroy', :as => :destroy_user_session,
-    :via => Devise.mappings[:user].sign_out_via
-end
+  devise_for :users, :skip => [:sessions]
+  as :user do
+    get 'register' => 'devise/registrations#new', :as => :register
+    get 'log_in' => 'devise/sessions#new', :as => :new_user_session
+    post 'log_in' => 'devise/sessions#create', :as => :user_session
+    match 'log_out' => 'devise/sessions#destroy', :as => :destroy_user_session,
+      :via => Devise.mappings[:user].sign_out_via
+  end
 
 
 
   resources :statuses
+  get 'feed', to: 'statuses#index', as: :feed
   root to: 'statuses#index'
+
+  get '/:id' => 'profiles#show'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
