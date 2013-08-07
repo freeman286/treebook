@@ -1,12 +1,14 @@
+<%= devise_error_messages! %>
+
 <h2 class="page-header">Resend confirmation instructions</h2>
 
 <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, class: "well" }) do |f| %>
-  <%= devise_error_messages! %>
+  
 
   <div><%= f.label :email %><br />
   <%= f.email_field :email, :autofocus => true %></div>
 
-  <div><%= f.submit "Resend confirmation instructions", class: "btn" %></div>
+  <div class="form-actions"><%= f.submit "Resend confirmation instructions", class: "btn" %></div>
 <% end %>
 
 <%= render "devise/shared/links" %>
