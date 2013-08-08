@@ -7,14 +7,12 @@ Treebook::Application.routes.draw do
     get '/logout', to: 'devise/sessions#destroy', as: :logout
   end
 
-  devise_for :users, :skip => [:sessions]
-  
+  devise_for :users, skip: [:sessions]
+
   as :user do
-    get 'register' => 'devise/registrations#new', :as => :register
-    get 'log_in' => 'devise/sessions#new', :as => :new_user_session
-    post 'log_in' => 'devise/sessions#create', :as => :user_session
-    match 'log_out' => 'devise/sessions#destroy', :as => :destroy_user_session,
-      :via => Devise.mappings[:user].sign_out_via
+    get "/login" => 'devise/sessions#new', as: :new_user_session
+    post "/login" => 'devise/sessions#create', as: :user_session
+    delete "/logout" => 'devise/sessions#destroy', as: :destroy_user_session
   end
 
   resources :user_friendships
@@ -23,7 +21,7 @@ Treebook::Application.routes.draw do
   get 'feed', to: 'statuses#index', as: :feed
   root to: 'statuses#index'
 
-  get '/:id' => 'profiles#show', as: 'profile'
+  get '/:id', to: 'profiles#show', as: 'profile'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
