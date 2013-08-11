@@ -17,13 +17,20 @@ class User < ActiveRecord::Base
                            uniqueness: true,
                             format: {
                             with: /^[a-zA-Z0-9_-]+$/,
-                            message: 'Must be formatted correctly.'
+                            message: 'Must contain no spaces or foreign characters.'
                             }
   has_many :statuses
 
   has_many :user_friendships
 
-  has_many :friends, through: :user_friendships
+  has_many :friends, through: :user_friendships,
+                     conditions: { user_friendships: {state: 'accepted' }}
+                     
+  has_many :pending_user_friendships, class_name: 'UserFriendships',
+                                      foreign_key: :user_id,
+                                      conditions: { state: 'pending'}
+                                      
+  has_many :pending_friends, through: :pending_user_friendships, source: :friend
 
   def full_name
   	first_name + " " + last_name
