@@ -29,9 +29,12 @@ class UserFriendshipsController < ApplicationController
   def create
   	if params[:user_friendship] && params[:user_friendship].has_key?(:friend_id)
       @friend = User.where(profile_name: params[:user_friendship][:friend_id]).first
-      @user_friendship = current_user.user_friendships.new(friend: @friend)
-      @user_friendship.save
-      flash[:notice] = "You are now friends with #{@friend.full_name}"
+      @user_friendship = UserFriendship.request(current_user, @friend)
+      if @user_friendship.new_record?
+        flash[:alert] = "There was a problem creating that friend request"
+      else
+        flash[:notice] = "Friend request sent to #{@friend.full_name}"
+      end
       redirect_to profile_path(@friend)
     else
       flash[:alert] = "Friend required"
