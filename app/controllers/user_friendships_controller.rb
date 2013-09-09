@@ -43,17 +43,17 @@ class UserFriendshipsController < ApplicationController
   end
   
   def edit
-    @user_friendship = current_user.user_friendships.find(params[:id])
-    @friend = @user_friendship.friend
+    @friend = User.where(profile_name: params[:id]).first
+    @user_friendship = current_user.user_friendships.where(friend_id: @friend.id).first
   end
   
   def destroy
-     @user_friendship = current_user.user_friendships.find(params[:id])
-     if @user_friendships.destroy
-       flash[:notice] = "Friendship destroyed"
-     else
-       flash[:alert] = "Friendship failed to destroyed"
-     end
-     redirect_to user_friendships_path
+    @user_friendship = current_user.user_friendships.find(params[:id])
+    if @user_friendship.destroy
+      flash[:notice] = "Friendship deleted"
+    else
+      flash[:notice] = "Friendship failed delete"
+    end
+    redirect_to user_friendships_path
   end
 end
