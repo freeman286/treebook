@@ -2,6 +2,7 @@ class StatusesController < ApplicationController
   # GET /statuses
   # GET /statuses.json
   before_filter :authenticate_user!, only: [:new, :create, :edit, :update]
+  before_filter :check_ownership, only: [:edit, :destroy, :update]
 
   def index
     @statuses = Status.all
@@ -83,5 +84,12 @@ class StatusesController < ApplicationController
       format.html { redirect_to statuses_url }
       format.json { head :no_content }
     end
+  end
+  
+  private
+  def check_ownership
+    if current_user.id != Status.find(params[:id]).user_id
+      raise "You are not authorised to do that"
+    end    
   end
 end

@@ -21,7 +21,7 @@ class UserFriendship < ActiveRecord::Base
       friendship1 = create!(user: user1, friend: user2, state: 'pending')
       friendship2 = create!(user: user2, friend: user1, state: 'requested')
       
-      friendship1.send_request_email
+      friendship1.send_request_email if !friendship1.new_record?
       friendship1
     end
   end
