@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   has_many :friends, through: :user_friendships,
                      conditions: { user_friendships: {state: 'accepted' }}
                      
-  has_many :pending_user_friendships, class_name: 'UserFriendships',
+  has_many :pending_user_friendships, class_name: 'UserFriendship',
                                       foreign_key: :user_id,
                                       conditions: { state: 'pending'}
                                       
