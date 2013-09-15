@@ -43,7 +43,7 @@ GEM
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
       warden (~> 1.2.3)
-    draper (1.2.1)
+    draper (1.0.0)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       request_store (~> 1.0.3)
@@ -137,7 +137,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
-  draper
+  draper (~> 1.0.0)
   factory_girl_rails
   jquery-rails
   js-routes
