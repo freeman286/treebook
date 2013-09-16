@@ -27,6 +27,9 @@
         <% if friendship.accepted? %>
           <em>Friendship started <%= friendship.updated_at %>.</em> <%= link_to "Update friendship", edit_user_friendship_path(friendship.id) %>.
         <% end %>
+		<% if friendship.blocked? %>
+          <em>User Blocked <%= friendship.updated_at %>.</em> <%= link_to "Unblock User", edit_user_friendship_path(friendship.id) %>.
+        <% end %>
     </div>
   </div>
 <% end %>

@@ -71,10 +71,18 @@ class UserFriendshipsController < ApplicationController
   
   def destroy
     @user_friendship = current_user.user_friendships.find(params[:id])
-    if @user_friendship.destroy
-      flash[:notice] = "Friendship deleted"
+    if !@user_friendship.block
+      if @user_friendship.destroy
+        flash[:notice] = "User unblocked"
+      else
+        flash[:alert] = "User is still blocked"
+      end
     else
-      flash[:notice] = "Friendship failed delete"
+      if @user_friendship.destroy
+        flash[:notice] = "Friendship deleted"
+      else
+        flash[:alert] = "Friendship failed delete"
+      end
     end
     redirect_to user_friendships_path
   end
@@ -91,7 +99,7 @@ class UserFriendshipsController < ApplicationController
     when 'accepted'
       current_user.accepted_user_friendships
     when 'requested'
-      current_user.blocked_user_friendships  
+      current_user.requested_user_friendships  
     end
   end
 end

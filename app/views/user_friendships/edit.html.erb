@@ -1,5 +1,9 @@
 <div class="page-header">
+	<% if @user_friendship.blocked? %>
+	<h1>Viewing Block</h1>	
+	<% else %>
 	<h1>Viewing Friendship</h1>
+	<% end %>
 </div>
 
 <div class="row">
@@ -29,7 +33,13 @@
 		<% end %>
 	<% end %>
 	
+	<% if @user_friendship.blocked? %>
 	<%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
+		<%= submit_tag "Unblock User", class: 'btn' %>
+	 <% end %>
+	<% else %>
+	 <%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
 		<%= submit_tag "Delete Friendship", class: 'btn' %>
+	 <% end %>
 	<% end %>
 </div>

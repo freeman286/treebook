@@ -10,6 +10,15 @@
 		<%= link_to "Add Friend", new_user_friendship_path(friend_id: @user), class: 'btn', id: 'add-friendship', data: { friend_id: @user.to_param } %>
 	<% end %>
 </div>
+<div id="block-status">
+	<% if !(current_user.friends.include?(@user) || current_user.pending_friends.include?(@user))%>
+		<% if current_user.blocked_friends.include?(@user) %>
+			<%= link_to "Unblock User", edit_user_friendship_path(UserFriendship.where(friend_id: @user).first), class: 'btn' %>
+		<% else %>
+			<%= link_to "Block User", block_user_friendship_path(friend_id: @user), class: 'btn btn-danger', id: 'block-user', data: { friend_id: @user.id.to_param } %>
+		<% end %>
+	<% end %>
+</div>
 <% end %>
 
 <% if @statuses %>

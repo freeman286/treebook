@@ -50,6 +50,14 @@ class User < ActiveRecord::Base
                                       
   has_many :accepted_friends, through: :accepted_user_friendships, source: :friend
   
+  def block!(user)
+    transaction do
+       friendship1 = UserFriendship.create!(user: self, friend: user, state: 'pending')
+       friendship2 = UserFriendship.create!(user: user, friend: self, state: 'requested')
+       friendship1.update_attribute(:state, 'blocked')
+       friendship2.update_attribute(:state, 'blocked')
+    end
+  end
 
   def full_name
   	first_name + " " + last_name
