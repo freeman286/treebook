@@ -23,23 +23,29 @@
 <div class="form-actions">
 	<% if @user_friendship.requested? %>
 		<%= form_for @user_friendship, url: accept_user_friendship_path(@user_friendship), method: :put do |form| %>
-			<%= submit_tag "Accept Friendship", class: 'btn' %>
+		<%= submit_tag "Accept Friendship", class: 'btn' %>
 		<% end %>
 	<% end %>
-	
+
+	<% if @user_friendship.blocked? %>
+		<%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
+		<%= submit_tag "Unblock User", class: 'btn' %>
+		<% end %>
+	<% else %>
+	<% if @user_friendship.requested? %>
+			<%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
+			<%= submit_tag "Ignore Friendship", class: 'btn' %>
+			<% end %>
+		<% else%>
+			<%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
+			<%= submit_tag "Delete Friendship", class: 'btn' %>
+			<% end %>
+		<% end %>
+	<% end %>
+
 	<% if @user_friendship.requested? %>
 		<%= form_for @user_friendship, url: block_user_friendship_path(@user_friendship), method: :put do |form| %>
-			<%= submit_tag "Block Friendship", class: 'btn' %>
+		<%= submit_tag "Block Friendship", class: 'btn btn-danger' %>
 		<% end %>
-	<% end %>
-	
-	<% if @user_friendship.blocked? %>
-	<%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
-		<%= submit_tag "Unblock User", class: 'btn' %>
-	 <% end %>
-	<% else %>
-	 <%= form_for @user_friendship, url: user_friendship_path(@user_friendship), method: :delete do |form| %>
-		<%= submit_tag "Delete Friendship", class: 'btn' %>
-	 <% end %>
 	<% end %>
 </div>
