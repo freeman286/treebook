@@ -19,12 +19,14 @@ class UserFriendshipsController < ApplicationController
   
   def block
     @user_friendship = current_user.user_friendships.find(params[:id])
-    if @user_friendship.block!
+    friendship = UserFriendship.create!(user: current_user, friend: @user_friendship.friend, state: 'pending')
+    friendship.update_attribute(:state, 'blocked')
+    redirect_to user_friendships_path
+    if @user_friendship.destroy
       flash[:notice] = "You have blocked #{@user_friendship.friend.full_name}"
     else
       flash[:alert] = "That friendship could not be blocked"
     end
-    redirect_to user_friendships_path
   end
   
   def new

@@ -52,10 +52,8 @@ class User < ActiveRecord::Base
   
   def block!(user)
     transaction do
-       friendship1 = UserFriendship.create!(user: self, friend: user, state: 'pending')
-       friendship2 = UserFriendship.create!(user: user, friend: self, state: 'requested')
-       friendship1.update_attribute(:state, 'blocked')
-       friendship2.update_attribute(:state, 'blocked')
+       friendship = UserFriendship.create!(user: self, friend: user, state: 'pending')
+       friendship.update_attribute(:state, 'blocked')
     end
   end
 
