@@ -1,7 +1,8 @@
 <% if @status.errors.any? %>
   <div class="alert alert-danger">
       <button class="close" data-dismiss="alert">x</button>
-      <ul>
+      <h3><%= pluralize(@status.errors.count, "error") %> prevented this status from being saved:</h3>
+	  <ul>
       <% @status.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
@@ -9,8 +10,11 @@
     </div>
 <% end %>
 <%= simple_form_for(@status, html: {class: "form-horizontal well"}) do |f| %>  
-  <%= f.input :content %>
+  <%= f.input :content, input_html: { rows: 4, class: 'input-xxlarge'}%>
+  <%= f.fields_for :document do |document_fields| %>
+	<%= document_fields.input :attachment, as: :file %>
+  <% end %>
 <div class="form-actions">
-    <%= f.button :submit, html: {class: "well"}  %>
+    <%= f.button :submit, class: "well btn btn-primary"  %>
 </div>
 <% end %>

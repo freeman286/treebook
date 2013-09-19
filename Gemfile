@@ -10,6 +10,7 @@ gem 'simple_form'
 gem 'state_machine'
 gem 'draper', '~> 1.0.0'
 gem 'js-routes'
+gem 'paperclip'
 
 group :test do
 	gem 'shoulda'
@@ -18,6 +19,8 @@ end
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'thin'
+  gem 'log_buddy'
 end
 
 group :production do
