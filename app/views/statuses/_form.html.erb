@@ -1,20 +1,29 @@
 <% if @status.errors.any? %>
-  <div class="alert alert-danger">
-      <button class="close" data-dismiss="alert">x</button>
-      <h3><%= pluralize(@status.errors.count, "error") %> prevented this status from being saved:</h3>
-	  <ul>
-      <% @status.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-<% end %>
-<%= simple_form_for(@status, html: {class: "form-horizontal well"}) do |f| %>  
-  <%= f.input :content, input_html: { rows: 4, class: 'input-xxlarge'}%>
-  <%= f.fields_for :document do |document_fields| %>
-	<%= document_fields.input :attachment, as: :file %>
-  <% end %>
+<div class="alert alert-danger">
+	<button class="close" data-dismiss="alert">x</button>
+	<h3><%= pluralize(@status.errors.count, "error") %> prevented this status from being saved:</h3>
+	<ul>
+		<% @status.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+		<% end %>
+	</ul>
+</div>
+	<% end %>
+	<%= simple_form_for(@status, html: {class: "form-horizontal well"}) do |f| %>  
+		<%= f.input :content, input_html: { rows: 4, class: 'input-xxlarge'}%>
+		<%= f.fields_for :document do |document_fields| %>
+		<% if document_fields.object.attachment? %>
+		<div class="control-group">
+			<label class='control-label'>Current attachment</label>
+			<div class="controls">
+				<%= link_to document_fields.object.attachment_file_name, document_fields.object.attachment.url %>
+			</div>
+		</div>
+		<%= document_fields.input :remove_attachment, as: :boolean, label: "Remove attachment?" %>
+		<% end %>
+		<%= document_fields.input :attachment, as: :file %>
+	<% end %>
 <div class="form-actions">
-    <%= f.button :submit, class: "well btn btn-primary"  %>
+	<%= f.button :submit, class: "well btn btn-primary"  %>
 </div>
 <% end %>

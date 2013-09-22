@@ -14,6 +14,19 @@ class UserFriendshipDecorator < Draper::Decorator
       "You are friends with #{model.friend.first_name}"
     end
   end
+  
+  def update_action_verbiage
+    case model.state
+    when 'pending'
+      'Delete request'
+    when 'requested'
+      'Accept Friendship'
+    when 'accepted'
+      'Update Friendship'
+    when 'blocked'
+      'Unblock User'
+    end
+  end
 
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

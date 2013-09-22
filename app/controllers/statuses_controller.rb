@@ -5,7 +5,7 @@ class StatusesController < ApplicationController
   before_filter :check_ownership, only: [:edit, :destroy, :update]
 
   def index
-    @statuses = Status.all
+    @statuses = Status.order('created_at desc').all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -60,11 +60,12 @@ class StatusesController < ApplicationController
   # PUT /statuses/1.json
   def update
     @status = Status.find(params[:id])
+    @document = @status.document
     if params[:status] && params[:status].has_key?(:user_id)
       params[:status].delete(:user_id) 
     end
     respond_to do |format|
-      if @status.update_attributes(params[:status])
+      if @status.update_attributes(params[:status]) && @document && @document.update_attributes(params[:status][:document_attributes]) 
         format.html { redirect_to @status, notice: 'Status was successfully updated.' }
         format.json { head :no_content }
       else
