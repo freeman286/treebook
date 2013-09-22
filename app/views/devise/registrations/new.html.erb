@@ -1,28 +1,22 @@
-<%= devise_error_messages! %>
-
-<h2 class="page-header">Sign up</h2>
-
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: {class: "well"}) do |f| %>
-
-  <div><%= f.label :first_name %> <br />
-  <%= f.text_field :first_name %></div>
-
-  <div><%= f.label :last_name %> <br />
-  <%= f.text_field :last_name %></div>
-
-  <div><%= f.label :profile_name %> <br />
-  <%= f.text_field :profile_name %></div>
-
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></div>
-
-  <div class="form-actions"><%= f.submit "Sign up", class: "btn"%></div>
+<%= page_header do %>
+  <h1>Sign Up For Treebook</h1>
 <% end %>
+
+<div class="row">
+  <div class="span6">
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), html: { class: 'form-vertical well' }) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.input :first_name, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :last_name, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :profile_name, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :email, input_html: { class: 'input-xlarge' } %>
+      <%= f.input :password, input_html: { class: 'input-xlarge', autocomplete: 'off' } %>
+      <%= f.input :password_confirmation, input_html: { class: 'input-xlarge', autocomplete: 'off' } %>
+      <div class="form-actions">
+        <%= f.submit "Sign up", class: 'btn btn-primary' %><br />
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <%= render "devise/shared/links" %>

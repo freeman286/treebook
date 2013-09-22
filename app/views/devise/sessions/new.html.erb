@@ -1,15 +1,23 @@
-<%= devise_error_messages! %>
-
-<h2 class="page-header">Sign in</h2>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "well"}) do |f| %>
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.label :password %><br />
-  <%= f.password_field :password %></div>
-
-  <div class="form-actions"><%= f.submit "Log in", class: "btn" %></div>
+<%= page_header do %>
+  <h2>Sign into Treebook</h2>
 <% end %>
 
-<%= render "devise/shared/links" %>
+<br />
+<div class="row">
+	<div class="span4">
+	<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name), html: {class: "well form-vertical"}) do |f| %>
+		<fieldset>
+			<%= f.input :email %>
+			<%= f.input :password %>
+	  	<% if devise_mapping.rememberable? -%>
+	    	<%= f.input :remember_me, as: :boolean, inline_label: "Remember Me", label: false %>
+	  	<% end -%>
+	  	<div class="form-actions">
+			<%= f.button :submit, "Sign In", class: 'btn btn-primary btn-block' %>
+		</div>
+		</fieldset>
+	<% end %>
+</div>
+</div>
+	<%= render "devise/shared/links" %>
+</div>

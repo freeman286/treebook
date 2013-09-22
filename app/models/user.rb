@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :profile_name
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name, :profile_name, :avatar
   # attr_accessible :title, :body
   
   validates :first_name, presence: true
@@ -49,6 +49,8 @@ class User < ActiveRecord::Base
                                       conditions: { state: 'accepted'}
                                       
   has_many :accepted_friends, through: :accepted_user_friendships, source: :friend
+  
+  has_attached_file :avatar
   
   def block!(user)
     transaction do
