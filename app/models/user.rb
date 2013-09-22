@@ -50,12 +50,24 @@ class User < ActiveRecord::Base
                                       
   has_many :accepted_friends, through: :accepted_user_friendships, source: :friend
   
-  has_attached_file :avatar
+  has_attached_file :avatar, styles: {
+    large: "800x800>", medium: "300x200>", small: "260x180>", thumb: "80x80#"
+  }
   
   def block!(user)
     transaction do
        friendship = UserFriendship.create!(user: self, friend: user, state: 'pending')
        friendship.update_attribute(:state, 'blocked')
+    end
+  end
+  
+  def self.get_gravatars
+    all.each do |user|
+      if !user.avatar?
+        user.avatar = URI.parse(user.gravatar_url)
+        user.save
+        print "."
+      end
     end
   end
 
