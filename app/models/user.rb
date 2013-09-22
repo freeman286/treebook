@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   has_many :accepted_friends, through: :accepted_user_friendships, source: :friend
   
   has_attached_file :avatar, styles: {
-    large: "800x800>", medium: "300x200>", small: "260x180>", thumb: "80x80#"
+    large: "800x800#", medium: "300x200#", small: "260x180#", thumb: "80x80#"
   }
   
   def block!(user)
