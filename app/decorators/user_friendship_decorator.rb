@@ -20,7 +20,7 @@ class UserFriendshipDecorator < Draper::Decorator
     when 'pending'
       'Delete request'
     when 'requested'
-      'Accept Friendship'
+      'Accept or Decline Friendship'
     when 'accepted'
       'Update Friendship'
     when 'blocked'
