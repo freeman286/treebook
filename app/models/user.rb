@@ -23,6 +23,11 @@ class User < ActiveRecord::Base
                             with: /^[a-zA-Z0-9_-]+$/,
                             message: 'Must contain no spaces or foreign characters.'
                             }
+  
+  has_many :albums
+  
+  has_many :pictures
+  
   has_many :statuses, dependent: :destroy
 
   has_many :user_friendships, dependent: :destroy
